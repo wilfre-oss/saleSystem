@@ -16,7 +16,11 @@ public class Sale {
     public Sale(){
         ic = new ItemCatalog();
     }
-
+    /*
+    *searches for item in the itemCatalog and adds them to itemList if found.
+    *
+    *@param itemID is the identifier used to find the items
+    */
     public Sale addItem(int itemID){
         Item foundItem = ic.searchForItem(itemID);
         if(foundItem.getItemID() == 0){
@@ -36,12 +40,18 @@ public class Sale {
         calculateTotalPrice();
         return this;
     }
-
+    /*
+    *saves the dateTime and calculates the totalPrice
+    */
     public void endSale() {
         this.dateTime = LocalDateTime.now();
         calculateTotalPrice();
     }
-
+    /*
+    *Adds the payment to the receipt and returns the amount to return.
+    *
+    * @param amountPaid is the amount paid for the sale
+    * */
     public double addPayment(double amountPaid) {
         Receipt receipt =  new Receipt(this, amountPaid);
         Printer.print(receipt);
@@ -49,7 +59,7 @@ public class Sale {
         return receipt.getReturnAmount();
     }
 
-    public void calculateTotalPrice(){
+    private void calculateTotalPrice(){
         double totalPrice = 0;
         for(ItemDTO itemInList: itemList){
             totalPrice += itemInList.getPrice() * itemInList.getVat() * itemInList.getQuantity();

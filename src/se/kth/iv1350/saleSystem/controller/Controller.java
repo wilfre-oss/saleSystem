@@ -15,7 +15,11 @@ public class Controller {
     public void startSale() {
         this.sale = new Sale();
     }
-
+    /*
+    *Calls the addItem method and returns saleInfo as a SaleDTO
+    *
+    * @param itemID is the identifier used for finding items, is sent to sale.
+    * */
     public SaleDTO enterItem(int itemID) {
         sale.addItem(itemID);
         return new SaleDTO(sale);

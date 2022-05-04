@@ -13,6 +13,11 @@ public class View {
         this.contr = contr;
     }
 
+    /*
+    *the coded view that call from the controller to add items to the sale
+    * and gets the saleInfo in return to display to the user
+    *
+    */
     public void runView(){
         System.out.println("Starting view");
         boolean exit = false;

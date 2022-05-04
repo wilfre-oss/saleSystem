@@ -13,6 +13,11 @@ public class ItemCatalog {
         itemList.add(new Item(3, "Beans","Canned beans" ,8, 1.06));
     }
 
+    /*
+    *searches for Items in to itemList using itemID and returns the found item
+    *
+    * @param ItemID used for finding item
+    */
     public Item searchForItem(int itemID){
         Item foundItem = new Item(0, "Null");
         for(Item item: itemList){
