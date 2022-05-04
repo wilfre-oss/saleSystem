@@ -12,6 +12,8 @@ class SaleTest {
     @BeforeEach
     void setUp() {
         sale = new Sale();
+        sale.addItem(1);
+
     }
 
     @Test
@@ -25,25 +27,8 @@ class SaleTest {
 
     @Test
     void addPayment() {
+        sale.setTotalPrice(20);
+        assertEquals(80, sale.addPayment(100));
     }
 
-    @Test
-    void calculateTotalPrice() {
-    }
-
-    @Test
-    void getDateTime() {
-    }
-
-    @Test
-    void getTotalPrice() {
-    }
-
-    @Test
-    void getItemList() {
-    }
-
-    @Test
-    void getStore() {
-    }
 }
