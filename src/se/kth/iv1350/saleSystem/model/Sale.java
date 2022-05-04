@@ -82,4 +82,8 @@ public class Sale {
     public Store getStore() {
         return store;
     }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 }

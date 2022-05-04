@@ -15,6 +15,7 @@ public class Controller {
     public void startSale() {
         this.sale = new Sale();
     }
+
     /*
     *Calls the addItem method and returns saleInfo as a SaleDTO
     *
