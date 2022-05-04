@@ -10,7 +10,7 @@ public class Controller {
 
     }
     /*
-    * Creates a New Sale and assigns it to the controller sale
+    * Creates a New Sale and assigns it to the controller's sale
     * */
     public void startSale() {
         this.sale = new Sale();

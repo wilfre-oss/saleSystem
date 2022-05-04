@@ -8,9 +8,9 @@ public class ItemCatalog {
 
     public ItemCatalog() {
         this.itemList = new ArrayList<>();
-        itemList.add(new Item(1, "Ham", 10, 1.12));
-        itemList.add(new Item(2, "Cheese", 15, 1.20));
-        itemList.add(new Item(3, "Beans",8, 1.10));
+        itemList.add(new Item(1, "Ham","Smoked ham" ,10, 1.12));
+        itemList.add(new Item(2, "Cheese","switz cheese", 15, 1.25));
+        itemList.add(new Item(3, "Beans","Canned beans" ,8, 1.06));
     }
 
     public Item searchForItem(int itemID){
