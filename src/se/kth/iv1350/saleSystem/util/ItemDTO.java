@@ -10,9 +10,6 @@ public class ItemDTO {
     private double vat;
     private int quantity;
 
-    public ItemDTO(){
-
-    }
     public ItemDTO(Item item){
         this.name = item.getName();
         this.itemID = item.getItemID();

@@ -31,7 +31,7 @@ public class View {
             printSaleInfo();
             System.out.println("Enter amount paid.");
             double returnAmount = contr.enterAmountPaid(in.nextInt());
-            System.out.println(String.format("Amount to Return: %.2f", returnAmount));
+            System.out.printf("Amount to Return: %.2f%n", returnAmount);
             exit = exitView();
         }
     }

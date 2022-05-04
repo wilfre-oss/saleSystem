@@ -24,7 +24,6 @@ public class SaleDTO {
     }
 
     private double calculateTotalVAT(){
-        double totalVAT;
         double sumOfPrice = 0;
         for (ItemDTO itemInList: itemList)
             sumOfPrice += itemInList.getPrice() * itemInList.getQuantity();
@@ -55,7 +54,7 @@ public class SaleDTO {
     public String toString() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         String result = itemList.stream().
-                map(i -> String.valueOf(i)).
+                map(String::valueOf).
                 collect(Collectors.joining("\n"));
         return  dtf.format(dateTime) + "\n" +
                 result + "\n" +

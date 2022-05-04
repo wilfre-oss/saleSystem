@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sale {
-    private ItemCatalog ic;
+    private final ItemCatalog ic;
     private LocalDateTime dateTime;
     private double totalPrice;
     private List<ItemDTO> itemList = new ArrayList<>();
