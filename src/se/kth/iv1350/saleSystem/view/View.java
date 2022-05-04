@@ -6,9 +6,7 @@ import java.util.Scanner;
 
 public class View {
     private Controller contr;
-    private int itemID = 1;
     private SaleDTO saleInfo;
-    private double returnAmount;
     Scanner in = new Scanner(System.in);
 
     public View(Controller contr){
@@ -22,7 +20,7 @@ public class View {
             contr.startSale();
             while(true){
                 System.out.println("Scan next item");
-                itemID = in.nextInt();
+                int itemID = in.nextInt();
                 if(itemID == 0)
                     break;
                 saleInfo = contr.enterItem(itemID);
@@ -32,7 +30,7 @@ public class View {
             System.out.println("Sale Ended \n");
             printSaleInfo();
             System.out.println("Enter amount paid.");
-            returnAmount = contr.enterAmountPaid(in.nextInt());
+            double returnAmount = contr.enterAmountPaid(in.nextInt());
             System.out.println(String.format("Amount to Return: %.2f", returnAmount));
             exit = exitView();
         }
