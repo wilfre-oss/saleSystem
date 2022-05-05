@@ -21,7 +21,7 @@ class SaleTest {
         Sale saleTest = new Sale(sale);
         sale.addItem(1);
         if(saleTest.equals(sale))
-            fail("sale dosen't update");
+            fail("Failed to add Item to Sale");
     }
 
     @Test
@@ -35,7 +35,12 @@ class SaleTest {
     @Test
     void addPayment() {
         sale.setTotalPrice(20);
-        assertEquals(80, sale.addPayment(100));
+        assertAll(
+                () -> assertEquals(80, sale.addPayment(100),"Add payment doesn't calculate return amount correctly"),
+                () -> assertEquals(30, sale.addPayment(50),"Add payment doesn't calculate return amount correctly"),
+                () -> assertEquals(10, sale.addPayment(30),"Add payment doesn't calculate return amount correctly"),
+                () -> assertEquals(180, sale.addPayment(200),"Add payment doesn't calculate return amount correctly")
+        );
     }
 
 }
