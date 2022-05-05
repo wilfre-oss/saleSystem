@@ -18,7 +18,6 @@ class ControllerTest {
     @BeforeEach
     void setUp() {
         controller.startSale();
-
     }
 
     @Test
