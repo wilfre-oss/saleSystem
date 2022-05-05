@@ -3,11 +3,14 @@ package se.kth.iv1350.saleSystem.controller;
 import se.kth.iv1350.saleSystem.model.Sale;
 import se.kth.iv1350.saleSystem.util.*;
 
+import java.util.Objects;
+
 public class Controller {
     private Sale sale;
 
-    public Controller(){
-
+    public Controller(){}
+    public Controller(Controller controller){
+        this.sale = controller.getSale();
     }
     /*
     * Creates a New Sale and assigns it to the controller's sale
@@ -33,5 +36,9 @@ public class Controller {
 
     public double enterAmountPaid(double amountPaid) {
         return sale.addPayment(amountPaid);
+    }
+
+    public Sale getSale() {
+        return sale;
     }
 }

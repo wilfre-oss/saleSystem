@@ -3,7 +3,9 @@ package se.kth.iv1350.saleSystem.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import se.kth.iv1350.saleSystem.model.Sale;
+import se.kth.iv1350.saleSystem.util.SaleDTO;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,25 +14,25 @@ class ControllerTest {
     private Controller controller = new Controller();
 
 
+
     @BeforeEach
     void setUp() {
         controller.startSale();
+
     }
 
     @Test
     void enterItem() {
-        Controller testController = new Controller();
         controller.enterItem(1);
-        if(testController.equals(controller))
-            fail("sale doesn't update in controller");
+        Sale sale = controller.getSale();
+        assertEquals((10*1.12), sale.getTotalPrice());
     }
 
     @Test
     void endSale() {
-        Controller testController = new Controller(controller);
         controller.endSale();
-        if(testController.equals(controller))
-            fail("sale doesn't update in controller");
+        Sale sale = controller.getSale();
+        assertEquals(LocalDateTime.now(), sale.getDateTime());
     }
 
     @Test
