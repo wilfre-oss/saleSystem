@@ -18,16 +18,16 @@ class SaleTest {
 
     @Test
     void addItem() {
-        Sale saleTest = sale;
+        Sale saleTest = new Sale(sale);
         sale.addItem(1);
         if(saleTest.equals(sale))
-            fail("sale does not add item");
+            fail("sale dosen't update");
     }
 
     @Test
     void endSale() {
-        Sale saleTest = sale;
-        sale.addItem(1);
+        Sale saleTest = new Sale(sale);
+        sale.endSale();
         if(saleTest.equals(sale))
             fail("sale doesn't update");
     }
@@ -38,17 +38,4 @@ class SaleTest {
         assertEquals(80, sale.addPayment(100));
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof SaleTest saleTest))
-            return false;
-        return Objects.equals(sale, saleTest.sale);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(sale);
-    }
 }

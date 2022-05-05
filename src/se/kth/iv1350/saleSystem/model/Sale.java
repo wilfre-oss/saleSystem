@@ -5,6 +5,7 @@ import se.kth.iv1350.saleSystem.integration.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Sale {
     private final ItemCatalog ic;
@@ -14,6 +15,13 @@ public class Sale {
     private Store store;
 
     public Sale(){
+        ic = new ItemCatalog();
+    }
+    public Sale(Sale sale){
+        this.totalPrice = sale.getTotalPrice();
+        this.dateTime = sale.getDateTime();
+        this.itemList = sale.getItemList();
+        this.store = sale.store;
         ic = new ItemCatalog();
     }
     /*
@@ -85,5 +93,24 @@ public class Sale {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Sale))
+            return false;
+        Sale sale = (Sale) o;
+        return Double.compare(sale.getTotalPrice(),
+                getTotalPrice()) == 0 && Objects.equals(ic, sale.ic) &&
+                Objects.equals(getDateTime(), sale.getDateTime()) &&
+                Objects.equals(getItemList(), sale.getItemList()) &&
+                Objects.equals(getStore(), sale.getStore());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ic, getDateTime(), getTotalPrice(), getItemList(), getStore());
     }
 }
