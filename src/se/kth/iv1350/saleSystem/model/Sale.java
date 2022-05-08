@@ -25,7 +25,9 @@ public class Sale {
         ic = new ItemCatalog();
     }
     /*
-    *searches for item in the itemCatalog and adds them to itemList if found.
+    * searches for item in the itemCatalog and adds them to itemList if found.
+    * throws exception if no item is found.
+    * ends with calculation the totalPrice from all items in the itemList.
     *
     *@param itemID is the identifier used to find the items
     */

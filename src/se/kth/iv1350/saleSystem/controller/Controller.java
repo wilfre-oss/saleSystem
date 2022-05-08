@@ -33,11 +33,19 @@ public class Controller {
         return new SaleDTO(sale);
     }
 
+    /*
+    * makes a call to sale for final updates and to log the dateTime
+    * returns saleDTO of the updated sale.
+    */
     public SaleDTO endSale() {
         sale.endSale();
         return new SaleDTO(sale);
     }
 
+    /*
+    * sends the paid amount to sale for storage and calculation of return amount.
+    * returns the amount to be returned to the costumer.
+    */
     public double enterAmountPaid(double amountPaid) {
         return sale.addPayment(amountPaid);
     }
