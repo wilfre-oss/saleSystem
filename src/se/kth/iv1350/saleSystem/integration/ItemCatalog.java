@@ -19,7 +19,7 @@ public class ItemCatalog {
     * @param ItemID used for finding item
     */
     public Item searchForItem(int itemID){
-        Item foundItem = new Item(0, "Null");
+        Item foundItem = null;
         for(Item item: itemList){
             if(item.getItemID() == itemID)
                 foundItem = item;

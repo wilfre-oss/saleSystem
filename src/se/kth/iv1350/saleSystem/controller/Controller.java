@@ -25,7 +25,11 @@ public class Controller {
     * @param itemID is the identifier used for finding items, is sent to sale.
     * */
     public SaleDTO enterItem(int itemID) {
-        sale.addItem(itemID);
+        try {
+            sale.addItem(itemID);
+        } catch (Exception e) {
+            System.out.println("No item found.");
+        }
         return new SaleDTO(sale);
     }
 

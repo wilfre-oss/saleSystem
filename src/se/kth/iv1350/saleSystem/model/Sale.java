@@ -29,12 +29,16 @@ public class Sale {
     *
     *@param itemID is the identifier used to find the items
     */
-    public Sale addItem(int itemID){
+    public void addItem(int itemID){
         Item foundItem = ic.searchForItem(itemID);
-        if(foundItem.getItemID() == 0){
-            System.out.println("No item Found!");
-            return this;
+        if(foundItem == null){
+            throw new NullPointerException();
         }
+        addToItemList(foundItem);
+        calculateTotalPrice();
+    }
+
+    private void addToItemList(Item foundItem){
         ItemDTO itemToAdd = new ItemDTO(foundItem);
         boolean itemAlreadyAdded = false;
         for (ItemDTO itemInList: itemList) {
@@ -45,9 +49,8 @@ public class Sale {
         }
         if(!itemAlreadyAdded)
             itemList.add(itemToAdd);
-        calculateTotalPrice();
-        return this;
     }
+
     /*
     *saves the dateTime and calculates the totalPrice
     */
