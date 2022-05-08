@@ -20,11 +20,22 @@ class SaleTest {
     }
 
     @Test
-    void addItem() {
+    void addItemUpdateCheck() {
         Sale saleTest = new Sale(sale);
         sale.addItem(1);
         if(saleTest.equals(sale))
             fail("Failed to add Item to Sale");
+    }
+
+    @Test
+    void addItemInvalidItemIDCheck(){
+        int itemID = 4;
+        try {
+            sale.addItem(itemID);
+            fail("Invalid itemID check failed");
+        } catch (Exception ignored){
+
+        }
     }
 
     @Test
