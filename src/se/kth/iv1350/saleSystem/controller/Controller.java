@@ -13,9 +13,7 @@ public class Controller {
     private Sale sale;
 
     public Controller(){}
-    public Controller(Controller controller){
-        this.sale = controller.getSale();
-    }
+
     /**
     * Creates a New Sale and assigns it to the controller's sale
     * */
@@ -57,7 +55,4 @@ public class Controller {
         return sale.addPayment(amountPaid);
     }
 
-    public Sale getSale() {
-        return sale;
-    }
 }

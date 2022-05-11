@@ -3,6 +3,10 @@ package se.kth.iv1350.saleSystem.model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import se.kth.iv1350.saleSystem.integration.ItemCatalog;
+import se.kth.iv1350.saleSystem.util.ItemDTO;
+
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,11 +24,33 @@ class SaleTest {
     }
 
     @Test
-    void addItemUpdateCheck() {
-        Sale saleTest = new Sale(sale);
+    void addItemToItemListCheck() {
+        ItemCatalog ic = new ItemCatalog();
+        ItemDTO itemDTO = new ItemDTO(ic.searchForItem(1));
         sale.addItem(1);
-        if(saleTest.equals(sale))
-            fail("Failed to add Item to Sale");
+        if(!itemDTO.equals(sale.getItemList().get(0)))
+            fail("Adding item to itemList failed");
+    }
+
+    @Test
+    void addItemItemAlreadyAddedCheck(){
+        sale.addItem(1);
+        sale.addItem(1);
+        assertEquals(2, sale.getItemList().get(0).getQuantity(),
+                "Failed to increase quantity when item already added");
+        sale.addItem(1);
+        sale.addItem(1);
+        assertEquals(4, sale.getItemList().get(0).getQuantity(),
+                "Failed to increase quantity when item already added");
+    }
+
+    @Test
+    void calculateTotalPriceCheck(){
+        sale.addItem(1);
+        sale.addItem(1);
+        sale.addItem(2);
+        assertEquals(2 * (10 * 1.12) + (15 * 1.25), sale.getTotalPrice(),
+                    "TotalPrice calculation failed");
     }
 
     @Test
@@ -39,15 +65,14 @@ class SaleTest {
     }
 
     @Test
-    void endSale() {
-        Sale saleTest = new Sale(sale);
+    void endSaleTest() {
         sale.endSale();
-        if(saleTest.equals(sale))
-            fail("sale doesn't update");
+        assertEquals(LocalDateTime.now().getSecond(), sale.getDateTime().getSecond(),
+                    "dateTime in sale not updated correctly");
     }
 
     @Test
-    void addPayment() {
+    void addPaymentTest() {
         sale.setTotalPrice(20);
         assertAll(
                 () -> assertEquals(80, sale.addPayment(100),"Add payment doesn't calculate return amount correctly"),
