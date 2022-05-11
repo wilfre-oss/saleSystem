@@ -2,6 +2,11 @@ package se.kth.iv1350.saleSystem.util;
 
 import se.kth.iv1350.saleSystem.integration.Item;
 
+import java.util.Objects;
+
+/**
+ * DTO of item, stores item info.
+ */
 public class ItemDTO {
     private String name;
     private int itemID;
@@ -17,18 +22,6 @@ public class ItemDTO {
         this.price = item.getPrice();
         this.vat = item.getVat();
         this.quantity = 1;
-    }
-    public ItemDTO(String name, int itemID, String description, int price, int vat) {
-        this.name = name;
-        this.itemID = itemID;
-        this.description = description;
-        this.price = price;
-        this.vat = vat;
-        this.quantity = 1;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public String getName() {
@@ -67,5 +60,20 @@ public class ItemDTO {
                 ", quantity=" + quantity;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ItemDTO itemDTO)) return false;
+        return getItemID() == itemDTO.getItemID() &&
+                Double.compare(itemDTO.getPrice(), getPrice()) == 0
+                && Double.compare(itemDTO.getVat(), getVat()) == 0
+                && getQuantity() == itemDTO.getQuantity()
+                && Objects.equals(getName(), itemDTO.getName())
+                && Objects.equals(getDescription(), itemDTO.getDescription());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getItemID(), getDescription(), getPrice(), getVat(), getQuantity());
+    }
 }

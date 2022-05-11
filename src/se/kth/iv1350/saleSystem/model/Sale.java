@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
+/**
+ * Sale get amd stores the information of the sale
+ * to be sent down to the controller
+ */
 public class Sale {
     private final ItemCatalog ic;
     private LocalDateTime dateTime;
@@ -24,18 +29,15 @@ public class Sale {
         this.store = sale.store;
         ic = new ItemCatalog();
     }
-    /*
+    /**
     * searches for item in the itemCatalog and adds them to itemList if found.
-    * throws exception if no item is found.
+    * ic.searchForItem() throws exception if no item is found.
     * ends with calculation the totalPrice from all items in the itemList.
     *
     *@param itemID is the identifier used to find the items
     */
     public void addItem(int itemID){
         Item foundItem = ic.searchForItem(itemID);
-        if(foundItem == null){
-            throw new NullPointerException();
-        }
         addToItemList(foundItem);
         calculateTotalPrice();
     }
@@ -53,17 +55,18 @@ public class Sale {
             itemList.add(itemToAdd);
     }
 
-    /*
+    /**
     *saves the dateTime and calculates the totalPrice
     */
     public void endSale() {
         this.dateTime = LocalDateTime.now();
         calculateTotalPrice();
     }
-    /*
-    *Adds the payment to the receipt and returns the amount to return.
+    /**
+    * Adds the payment to the receipt and returns the amount to return.
     *
     * @param amountPaid is the amount paid for the sale
+     * @return receipt.returnAmount the amount to be returned to the costumer
     * */
     public double addPayment(double amountPaid) {
         Receipt receipt =  new Receipt(this, amountPaid);
@@ -104,9 +107,8 @@ public class Sale {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (!(o instanceof Sale))
+        if (!(o instanceof Sale sale))
             return false;
-        Sale sale = (Sale) o;
         return Double.compare(sale.getTotalPrice(),
                 getTotalPrice()) == 0 && Objects.equals(ic, sale.ic) &&
                 Objects.equals(getDateTime(), sale.getDateTime()) &&

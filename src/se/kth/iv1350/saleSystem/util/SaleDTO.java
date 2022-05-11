@@ -8,6 +8,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * DTO of the sale
+ */
 public class SaleDTO {
     private LocalDateTime dateTime;
     private double totalPrice;

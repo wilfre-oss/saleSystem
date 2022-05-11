@@ -5,7 +5,7 @@ import se.kth.iv1350.saleSystem.util.*;
 import java.util.Scanner;
 
 public class View {
-    private Controller contr;
+    private final Controller contr;
     private SaleDTO saleInfo;
     Scanner in = new Scanner(System.in);
 
@@ -13,7 +13,7 @@ public class View {
         this.contr = contr;
     }
 
-    /*
+    /**
     *the coded view that call from the controller to add items to the sale
     * and gets the saleInfo in return to display to the user
     *

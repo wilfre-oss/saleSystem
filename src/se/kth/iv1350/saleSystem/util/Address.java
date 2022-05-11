@@ -1,5 +1,8 @@
 package se.kth.iv1350.saleSystem.util;
 
+/**
+ * an address object
+ */
 public class Address {
     private int zipCode;
     private String city;

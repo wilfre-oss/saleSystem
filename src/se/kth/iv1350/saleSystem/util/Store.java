@@ -1,5 +1,9 @@
 package se.kth.iv1350.saleSystem.util;
 
+
+/**
+ * Stores information of the store
+ */
 public class Store {
     private String name;
     private Address address;

@@ -1,5 +1,8 @@
 package se.kth.iv1350.saleSystem.integration;
 
+/**
+ * Item object holds the information of an item
+ */
 public class Item {
     private int itemID;
     private String name;
@@ -10,19 +13,6 @@ public class Item {
     public Item(){
 
     }
-
-    public Item(int itemID, String name){
-        this.itemID = itemID;
-        this.name = name;
-    }
-
-    public Item(int itemID, String name, double price, double vat) {
-        this.itemID = itemID;
-        this.name = name;
-        this.price = price;
-        this.vat = vat;
-    }
-
     public Item(int itemID, String name, String description, double price, double vat) {
         this.itemID = itemID;
         this.name = name;

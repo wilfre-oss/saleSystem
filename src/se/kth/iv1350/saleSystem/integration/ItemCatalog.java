@@ -3,6 +3,10 @@ package se.kth.iv1350.saleSystem.integration;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ItemCatalog is the class used for storing items
+ * and searching for them using itemID
+ */
 public class ItemCatalog {
     List<Item> itemList;
 
@@ -13,17 +17,20 @@ public class ItemCatalog {
         itemList.add(new Item(3, "Beans","Canned beans" ,8, 1.06));
     }
 
-    /*
-    *searches for Items in to itemList using itemID and returns the found item
+    /**
+    * searches for Items in to itemList using itemID and returns the found item.
+     * throws exception if no item is found.
     *
-    * @param ItemID used for finding item
+    * @param itemID used for finding item
+     * @return item
     */
     public Item searchForItem(int itemID){
-        Item foundItem = null;
+        if(itemID <= 0)
+            throw new IllegalArgumentException();
         for(Item item: itemList){
             if(item.getItemID() == itemID)
-                foundItem = item;
+                return item;
         }
-        return foundItem;
+        return null;
     }
 }
