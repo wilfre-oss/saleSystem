@@ -2,6 +2,7 @@ package se.kth.iv1350.saleSystem.model;
 import se.kth.iv1350.saleSystem.util.*;
 import se.kth.iv1350.saleSystem.integration.*;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,7 @@ public class Sale {
     public Sale(){
         ic = new ItemCatalog();
     }
-    public Sale(Sale sale){
-        this.totalPrice = sale.getTotalPrice();
-        this.dateTime = sale.getDateTime();
-        this.itemList = sale.getItemList();
-        this.store = sale.store;
-        ic = new ItemCatalog();
-    }
+
     /**
     * searches for item in the itemCatalog and adds them to itemList if found.
     * ic.searchForItem() throws exception if no item is found.
@@ -36,7 +31,7 @@ public class Sale {
     *
     *@param itemID is the identifier used to find the items
     */
-    public void addItem(int itemID){
+    public void addItem(int itemID) throws SQLException {
         Item foundItem = ic.searchForItem(itemID);
         addToItemList(foundItem);
         calculateTotalPrice();

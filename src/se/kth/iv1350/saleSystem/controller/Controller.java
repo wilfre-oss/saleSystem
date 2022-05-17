@@ -3,6 +3,7 @@ package se.kth.iv1350.saleSystem.controller;
 import se.kth.iv1350.saleSystem.model.Sale;
 import se.kth.iv1350.saleSystem.util.*;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
 
@@ -30,8 +31,15 @@ public class Controller {
     public SaleDTO enterItem(int itemID) {
         try {
             sale.addItem(itemID);
-        } catch (Exception e) {
+        }
+        catch (IllegalArgumentException ile) {
+            System.out.println("Faulty itemID entry.");
+        }
+        catch (NullPointerException e) {
             System.out.println("No item found.");
+        }
+        catch (SQLException sqle){
+            System.out.println("Connection to database failed.");
         }
         return new SaleDTO(sale);
     }

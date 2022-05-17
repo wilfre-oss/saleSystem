@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import se.kth.iv1350.saleSystem.integration.ItemCatalog;
 import se.kth.iv1350.saleSystem.util.ItemDTO;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,29 +27,50 @@ class SaleTest {
     @Test
     void addItemToItemListCheck() {
         ItemCatalog ic = new ItemCatalog();
-        ItemDTO itemDTO = new ItemDTO(ic.searchForItem(1));
-        sale.addItem(1);
+        ItemDTO itemDTO = null;
+        try {
+            itemDTO = new ItemDTO(ic.searchForItem(1));
+            sale.addItem(1);
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            fail("Failure to connect to database");
+        }
         if(!itemDTO.equals(sale.getItemList().get(0)))
             fail("Adding item to itemList failed");
     }
 
     @Test
     void addItemItemAlreadyAddedCheck(){
-        sale.addItem(1);
-        sale.addItem(1);
+        try {
+            sale.addItem(1);
+            sale.addItem(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            fail("Failure to connect to database");
+        }
         assertEquals(2, sale.getItemList().get(0).getQuantity(),
                 "Failed to increase quantity when item already added");
-        sale.addItem(1);
-        sale.addItem(1);
+        try {
+            sale.addItem(1);
+            sale.addItem(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            fail("Failure to connect to database");
+        }
         assertEquals(4, sale.getItemList().get(0).getQuantity(),
                 "Failed to increase quantity when item already added");
     }
 
     @Test
     void calculateTotalPriceCheck(){
-        sale.addItem(1);
-        sale.addItem(1);
-        sale.addItem(2);
+        try {
+            sale.addItem(1);
+            sale.addItem(1);
+            sale.addItem(2);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            fail("Failure to connect to database");
+        }
         assertEquals(2 * (10 * 1.12) + (15 * 1.25), sale.getTotalPrice(),
                     "TotalPrice calculation failed");
     }

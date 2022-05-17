@@ -1,5 +1,8 @@
 package se.kth.iv1350.saleSystem.integration;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,20 +20,32 @@ public class ItemCatalog {
         itemList.add(new Item(3, "Beans","Canned beans" ,8, 1.06));
     }
 
-    /**
+   /**
     * searches for Items in to itemList using itemID and returns the found item.
-     * throws exception if no item is found.
-    *
+    * throws exception if no item is found.
     * @param itemID used for finding item
-     * @return item
-    */
-    public Item searchForItem(int itemID){
+    * @return item
+    *
+    * */
+    public Item searchForItem(int itemID) throws SQLException {
         if(itemID <= 0)
             throw new IllegalArgumentException();
+        if(itemID == 111)
+            connectToDB();
         for(Item item: itemList){
             if(item.getItemID() == itemID)
                 return item;
         }
-        return null;
+        throw new NullPointerException();
+    }
+
+    private void connectToDB() throws SQLException {
+        String DB_URL = "jdbc:mysql://localhost/noConnectionTest";
+        String USER = "guest";
+        String PASS = "guest123";
+        String QUERY = "{call getEmpName (?, ?)}";
+
+        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        conn.prepareCall(QUERY);
     }
 }

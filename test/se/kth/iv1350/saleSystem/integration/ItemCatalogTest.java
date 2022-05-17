@@ -2,6 +2,8 @@ package se.kth.iv1350.saleSystem.integration;
 
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -14,8 +16,12 @@ class ItemCatalogTest {
             ic.searchForItem(555);
             fail("Item search returns nonexistent item");
         }
-        catch (Exception ignored){
+        catch (NullPointerException ignored){
 
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+            fail("Try and fails to connect to database");
         }
     }
 
@@ -24,9 +30,26 @@ class ItemCatalogTest {
         int itemID = 1;
         Item foundItem;
         for(Item itemInList: ic.itemList){
-            foundItem = ic.searchForItem(itemID++);
-            assertEquals(itemInList.getItemID(), foundItem.getItemID(),
-                    "SearchForItem doesn't find the correct item");
+            try {
+                foundItem = ic.searchForItem(itemID++);
+                assertEquals(itemInList.getItemID(), foundItem.getItemID(),
+                        "SearchForItem doesn't find the correct item");
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+                fail("Failure to connect to database");
+            }
+
+        }
+    }
+
+    @Test
+    void testConnectionFailure(){
+        int itemID = 111;
+        try {
+            ic.searchForItem(itemID);
+            fail("Doesn't throw connection exception");
+        } catch (SQLException ignored) {
+
         }
     }
 }
