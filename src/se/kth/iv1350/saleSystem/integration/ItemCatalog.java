@@ -1,5 +1,7 @@
 package se.kth.iv1350.saleSystem.integration;
 
+import se.kth.iv1350.saleSystem.exceptions.NoItemFoundException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -36,7 +38,7 @@ public class ItemCatalog {
             if(item.getItemID() == itemID)
                 return item;
         }
-        throw new NullPointerException();
+        throw new NoItemFoundException("No Item Found.");
     }
 
     private void connectToDB() throws SQLException {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ERROR" name="William" packages="">
+    <Appenders>
+        <File name="fout" fileName="saleSystem.log" append="true">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p [%t]: %m%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="Controller">
+            <AppenderRef ref="fout"/>
+        </Logger>
+        <Root level="debug">
+            <AppenderRef ref="fout"/>
+        </Root>
+    </Loggers>
+</Configuration>

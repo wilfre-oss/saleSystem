@@ -1,8 +1,10 @@
 package se.kth.iv1350.saleSystem.controller;
 
+import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import se.kth.iv1350.saleSystem.exceptions.ConnectionException;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +17,7 @@ class ControllerTest {
 
     @BeforeEach
     void setUp() {
-        controller = new Controller();
+        controller = new Controller(LogManager.getLogger(Controller.class));
         controller.startSale();
     }
 
@@ -35,8 +37,12 @@ class ControllerTest {
 
     @Test
     void enterItemCorrectItemAddedTest(){
-        assertEquals(1, controller.enterItem(1).getItemList().get(0).getItemID(),
-                    "Incorrect item added in saleDTO");
+        try {
+            assertEquals(1, controller.enterItem(1).getItemList().get(0).getItemID(),
+                        "Incorrect item added in saleDTO");
+        } catch (ConnectionException e) {
+            fail("enterItem tries and fails to connect to database");
+        }
     }
 
     @Test
@@ -54,7 +60,11 @@ class ControllerTest {
 
     @Test
     void enterAmountPaidTest() {
-        controller.enterItem(1);
+        try {
+            controller.enterItem(1);
+        } catch (ConnectionException e) {
+            fail("enterItem tries and fails to connect to database");
+        }
         assertAll("Amount to return to costumer is incorrect",
                 () -> assertEquals(80-(10*1.12), controller.enterAmountPaid(80)),
                 () -> assertEquals(100-(10*1.12), controller.enterAmountPaid(100)),

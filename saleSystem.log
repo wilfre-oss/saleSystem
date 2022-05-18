@@ -1,0 +1,18 @@
+2022-05-17 22:37:54 INFO  [main]: Faulty itemID entry.
+2022-05-17 22:37:59 INFO  [main]: No Item Found.
+2022-05-17 22:38:02 ERROR [main]: No suitable driver found for jdbc:mysql://localhost/noConnectionTest
+2022-05-17 23:00:37 ERROR [main]: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2022-05-18 11:16:55 ERROR [main]: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2022-05-18 11:18:24 INFO  [main]: No Item Found.
+2022-05-18 11:37:32 WARN  [main]: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2022-05-18 11:37:32 WARN  [main]: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2022-05-18 11:37:34 INFO  [main]: No Item Found.
+2022-05-18 11:37:34 INFO  [main]: No Item Found.

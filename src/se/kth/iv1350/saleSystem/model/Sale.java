@@ -1,4 +1,5 @@
 package se.kth.iv1350.saleSystem.model;
+import org.apache.logging.log4j.Logger;
 import se.kth.iv1350.saleSystem.util.*;
 import se.kth.iv1350.saleSystem.integration.*;
 
@@ -19,6 +20,8 @@ public class Sale {
     private double totalPrice;
     private List<ItemDTO> itemList = new ArrayList<>();
     private Store store;
+    private List<SaleObserver> observerList = new ArrayList<>();
+
 
     public Sale(){
         ic = new ItemCatalog();
@@ -52,10 +55,12 @@ public class Sale {
 
     /**
     *saves the dateTime and calculates the totalPrice
+     * and notifies the observers
     */
     public void endSale() {
         this.dateTime = LocalDateTime.now();
         calculateTotalPrice();
+        notifyObservers();
     }
     /**
     * Adds the payment to the receipt and returns the amount to return.
@@ -65,6 +70,8 @@ public class Sale {
     * */
     public double addPayment(double amountPaid) {
         Receipt receipt =  new Receipt(this, amountPaid);
+        if(receipt.getReturnAmount() < 0)
+            throw new IllegalArgumentException("Payment must cover whole price.");
         Printer.print(receipt);
         Register.addAmountPaid(amountPaid, receipt.getReturnAmount());
         return receipt.getReturnAmount();
@@ -72,10 +79,27 @@ public class Sale {
 
     private void calculateTotalPrice(){
         double totalPrice = 0;
+
         for(ItemDTO itemInList: itemList){
             totalPrice += itemInList.getPrice() * itemInList.getVat() * itemInList.getQuantity();
         }
-        this.totalPrice = totalPrice;
+
+        this.totalPrice = (double)Math.round(totalPrice * 100000d) / 100000d;
+    }
+
+    private void notifyObservers(){
+        for(SaleObserver observer: observerList){
+            observer.addToTotalRevenue(totalPrice);
+        }
+    }
+
+    /**
+     * adds observer to observerList.
+     *
+     * @param observers the observer to add.
+     */
+    public void addSaleObserver(List<SaleObserver> observers){
+        observerList.addAll(observers);
     }
 
     public LocalDateTime getDateTime() {
