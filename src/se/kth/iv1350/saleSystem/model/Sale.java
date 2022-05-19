@@ -1,5 +1,5 @@
 package se.kth.iv1350.saleSystem.model;
-import org.apache.logging.log4j.Logger;
+
 import se.kth.iv1350.saleSystem.util.*;
 import se.kth.iv1350.saleSystem.integration.*;
 

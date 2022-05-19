@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TotalRevenueFileOutput implements SaleObserver {
     private double revenue;
@@ -22,9 +24,11 @@ public class TotalRevenueFileOutput implements SaleObserver {
     private void printToFile(){
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.CEILING);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("Revenue.txt"));
-            writer.write(" Total Revenue: " + df.format(revenue));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("Revenue.txt", true));
+            writer.write(dtf.format(LocalDateTime.now()) + " || Total Revenue: " + df.format(revenue) + "\n");
             writer.close();
         } catch (IOException e) {
             logger.error("Logging Total Revenue failed.", e.getCause());
