@@ -5,6 +5,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import se.kth.iv1350.saleSystem.exceptions.ConnectionException;
+import se.kth.iv1350.saleSystem.exceptions.InsufficientPaymentException;
+import se.kth.iv1350.saleSystem.exceptions.NoItemFoundException;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +19,7 @@ class ControllerTest {
 
     @BeforeEach
     void setUp() {
-        controller = new Controller(LogManager.getLogger(Controller.class));
+        controller = new Controller(LogManager.getLogger("Test"));
         controller.startSale();
     }
 
@@ -27,16 +29,19 @@ class ControllerTest {
     }
 
     @Test
-    void enterItemCatchExceptionTest() {
+    void testNoItemFoundException() {
        try {
            controller.enterItem(555);
-       } catch (Exception e){
-           fail("enterItem fails to catch exception");
+           fail("enterItem fails to catch NoItemFoundException");
+       } catch (NoItemFoundException ignored){
+
+       }catch (ConnectionException e){
+           fail("Tries and fails to connects to database");
        }
     }
 
     @Test
-    void enterItemCorrectItemAddedTest(){
+    void testCorrectItemAddedTest(){
         try {
             assertEquals(1, controller.enterItem(1).getItemList().get(0).getItemID(),
                         "Incorrect item added in saleDTO");
@@ -71,6 +76,40 @@ class ControllerTest {
                 () -> assertEquals(200-(10*1.12), controller.enterAmountPaid(200)),
                 () -> assertEquals(500-(10*1.12), controller.enterAmountPaid(500)));
 
+    }
+
+    @Test
+    void testNegativeAmountPaid(){
+        try {
+            controller.enterItem(1);
+        } catch (ConnectionException e) {
+            fail("enterItem tries and fails to connect to database");
+        }
+        try{
+            controller.enterAmountPaid(-10);
+            fail("Program allows negative payment");
+        } catch (IllegalArgumentException ignored){
+
+        } catch (InsufficientPaymentException ignored){
+            fail("negative payment is bypassed.");
+        }
+    }
+
+    @Test
+    void testInsufficientPaymentException(){
+        try {
+            controller.enterItem(1);
+        } catch (ConnectionException e) {
+            fail("enterItem tries and fails to connect to database");
+        }
+        try{
+            controller.enterAmountPaid(10);
+            fail("Program allows payment to be less than the total price of the sale");
+        } catch (IllegalArgumentException ignored){
+            fail("Program reads the paid amount to be <= 0.");
+        } catch (InsufficientPaymentException ignored){
+
+        }
     }
 
 

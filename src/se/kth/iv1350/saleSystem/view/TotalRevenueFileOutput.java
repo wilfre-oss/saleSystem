@@ -11,6 +11,9 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * calculates the total revenue and log it to a file.
+ */
 public class TotalRevenueFileOutput implements SaleObserver {
     private double revenue;
     private final Logger logger = LogManager.getLogger();
@@ -22,7 +25,7 @@ public class TotalRevenueFileOutput implements SaleObserver {
     }
 
     private void printToFile(){
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("#.#0");
         df.setRoundingMode(RoundingMode.CEILING);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 

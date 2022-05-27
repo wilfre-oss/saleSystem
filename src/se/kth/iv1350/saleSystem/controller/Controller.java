@@ -14,7 +14,7 @@ import java.util.List;
 
 
 /**
- * Controller is the class that accesses other classes for the user
+ * Controller is the class that accesses other classes for the view
  */
 public class Controller {
     private Sale sale;
@@ -35,27 +35,32 @@ public class Controller {
     }
 
     /**
-     * Calls the addItem method and returns saleInfo as a SaleDTO
+     * Calls the addItem method in sale for sale to add an item to the list.
+     * the logger logs the exception to a file.
      *
      * @param itemID is the identifier used for finding items, is sent to sale.
      * @return SaleDTO(sale) a DTO of the sale.
      * @throws ConnectionException if unable to reach database.
+     * @throws NoItemFoundException if no item is found in the database.
+     * @throws IllegalArgumentException if invalid itemID.
      */
-    public SaleDTO enterItem(int itemID) throws ConnectionException {
+    public SaleDTO enterItem(int itemID)
+            throws ConnectionException, NoItemFoundException,
+                    IllegalArgumentException{
         try {
             sale.addItem(itemID);
         }
         catch (IllegalArgumentException ile) {
-            System.out.println("Faulty itemID entry.");
-            logger.info("Faulty itemID entry.");
+            logger.info(ile.getMessage(), ile);
+            throw new IllegalArgumentException();
         }
         catch (NoItemFoundException e) {
-            System.out.println(e.getMessage());
-            logger.info(e.getMessage());
+            logger.info(e.getMessage(), e);
+            throw new NoItemFoundException();
         }
         catch (SQLException sqle){
-            logger.warn(sqle.getMessage());
-            throw new ConnectionException("Connection to database failed.");
+            logger.warn(sqle.getMessage(), sqle);
+            throw new ConnectionException();
         }
         return new SaleDTO(sale);
     }
@@ -74,10 +79,14 @@ public class Controller {
     * sends the paid amount to sale for storage and calculation of return amount.
     * @param amountPaid the amount paid for the sale.
      * @return returnAmount the amount to be returned to the costumer.
+     * @throws IllegalArgumentException if payment is <= 0.
+     * @throws InsufficientPaymentException if payment is not sufficient.
     */
-    public double enterAmountPaid(double amountPaid) {
-        if (amountPaid <= 0)
-            throw new IllegalArgumentException("Payment must be provided");
+    public double enterAmountPaid(double amountPaid) throws InsufficientPaymentException {
+        if (amountPaid <= 0){
+            throw new IllegalArgumentException("Payment can not be negative or zero.");
+        }
+
         return sale.addPayment(amountPaid);
     }
 

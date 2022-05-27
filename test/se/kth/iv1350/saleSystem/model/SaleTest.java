@@ -71,7 +71,8 @@ class SaleTest {
             e.printStackTrace();
             fail("Failure to connect to database");
         }
-        assertEquals(2 * (10 * 1.12) + (15 * 1.25), sale.getTotalPrice(),
+        double expected = (double)Math.round((2 * (10 * 1.12) + (15 * 1.25)) * 100000d) / 100000d;
+        assertEquals(expected, sale.getTotalPrice(),
                     "TotalPrice calculation failed");
     }
 

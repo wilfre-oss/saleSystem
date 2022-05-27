@@ -1,6 +1,7 @@
 package se.kth.iv1350.saleSystem.integration;
 
 import org.junit.jupiter.api.Test;
+import se.kth.iv1350.saleSystem.exceptions.NoItemFoundException;
 
 import java.sql.SQLException;
 
@@ -16,12 +17,24 @@ class ItemCatalogTest {
             ic.searchForItem(555);
             fail("Item search returns nonexistent item");
         }
-        catch (NullPointerException ignored){
+        catch (NoItemFoundException ignored){
 
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
             fail("Try and fails to connect to database");
+        }
+    }
+
+    @Test
+    void testNegativeItemID(){
+        try{
+            ic.searchForItem(-10);
+            fail("Item Search use negative number for search in itemList");
+        } catch (IllegalArgumentException ignored) {
+
+        } catch (SQLException sqle){
+            fail("Search tries and fails to connect to database");
         }
     }
 

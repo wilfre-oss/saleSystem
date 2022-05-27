@@ -40,7 +40,7 @@ public class View {
                     }catch (InputMismatchException e){
                         in.next();
                         System.out.println("Faulty itemID entry");
-                        logger.debug("Faulty itemID entry");
+                        logger.trace("Faulty itemID entry", e);
                     }
                 }
                 if(itemID == 0)
@@ -48,8 +48,11 @@ public class View {
                 try {
                     saleInfo = contr.enterItem(itemID);
                 } catch (ConnectionException e) {
-                    System.out.println(e.getMessage());
-                    logger.warn(e.getMessage());
+                    System.out.println("Connection to database failed.");
+                } catch(NoItemFoundException e) {
+                    System.out.println("No item Found.");
+                } catch (IllegalArgumentException e){
+                    System.out.println("Invalid item ID");
                 }
             }
             in.nextLine();
@@ -83,12 +86,15 @@ public class View {
                 System.out.printf("Amount to Return: %.2f%n", returnAmount);
                 break;
             }catch (IllegalArgumentException e){
-                System.out.println(e.getMessage());
-                logger.info(e.getMessage());
+                System.out.println("Invalid payment.");
+                logger.info(e.getMessage(), e);
             }catch (InputMismatchException e) {
                 in.next();
                 System.out.println("Invalid input for payment, must be provided as a number");
-                logger.info("Invalid input", e.getCause());
+                logger.trace("Invalid input", e);
+            } catch (InsufficientPaymentException e){
+                System.out.println("Payments must cover whole price");
+                logger.debug(e);
             }
         }
     }

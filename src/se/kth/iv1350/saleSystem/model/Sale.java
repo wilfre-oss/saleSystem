@@ -2,12 +2,12 @@ package se.kth.iv1350.saleSystem.model;
 
 import se.kth.iv1350.saleSystem.util.*;
 import se.kth.iv1350.saleSystem.integration.*;
+import se.kth.iv1350.saleSystem.exceptions.*;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
 
 
 /**
@@ -32,7 +32,10 @@ public class Sale {
     * ic.searchForItem() throws exception if no item is found.
     * ends with calculation the totalPrice from all items in the itemList.
     *
-    *@param itemID is the identifier used to find the items
+    *  @param itemID is the identifier used to find the items
+     * @throws SQLException if ItemCatalog fails to connect to database.
+     * @throws NoItemFoundException if ItemCatalog does not find an item.
+     * @throws IllegalArgumentException if Item ID <= 0.
     */
     public void addItem(int itemID) throws SQLException {
         Item foundItem = ic.searchForItem(itemID);
@@ -67,11 +70,12 @@ public class Sale {
     *
     * @param amountPaid is the amount paid for the sale
      * @return receipt.returnAmount the amount to be returned to the costumer
+     * @throws InsufficientPaymentException if payment in not sufficient.
     * */
-    public double addPayment(double amountPaid) {
+    public double addPayment(double amountPaid) throws  InsufficientPaymentException{
         Receipt receipt =  new Receipt(this, amountPaid);
         if(receipt.getReturnAmount() < 0)
-            throw new IllegalArgumentException("Payment must cover whole price.");
+            throw new InsufficientPaymentException("Payment must cover whole price.");
         Printer.print(receipt);
         Register.addAmountPaid(amountPaid, receipt.getReturnAmount());
         return receipt.getReturnAmount();

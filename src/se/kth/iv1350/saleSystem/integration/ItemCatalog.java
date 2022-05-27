@@ -27,7 +27,9 @@ public class ItemCatalog {
     * throws exception if no item is found.
     * @param itemID used for finding item
     * @return item
-    *
+    * @throws SQLException if connection to database fails.
+    * @throws NoItemFoundException if no item is found.
+    * @throws IllegalArgumentException if item ID is <= 0.
     * */
     public Item searchForItem(int itemID) throws SQLException {
         if(itemID <= 0)

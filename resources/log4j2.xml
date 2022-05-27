@@ -11,6 +11,9 @@
         <Logger name="Controller">
             <AppenderRef ref="fout"/>
         </Logger>
+        <Logger name="Test" level="Fatal">
+            <AppenderRef ref="fout"/>
+        </Logger>
         <Root level="debug">
             <AppenderRef ref="fout"/>
         </Root>
