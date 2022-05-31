@@ -25,7 +25,7 @@ public class TotalRevenueFileOutput implements SaleObserver {
     }
 
     private void printToFile(){
-        DecimalFormat df = new DecimalFormat("#.#0");
+        DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.CEILING);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
