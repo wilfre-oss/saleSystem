@@ -28,8 +28,9 @@ class ControllerTest {
     void enterItemCatchExceptionTest() {
        try {
            controller.enterItem(555);
-       } catch (Exception e){
            fail("enterItem fails to catch exception");
+       } catch (Exception e){
+           
        }
     }
 
